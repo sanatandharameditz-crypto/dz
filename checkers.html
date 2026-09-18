@@ -402,7 +402,8 @@
     var p = board[r][c];
     if (!p) return { moves: [], jumps: [] };
     var col = pieceColor(p);
-    var dirs = isKing(p) ? [[-1,-1],[-1,1],[1,-1],[1,1]] : (col === 1 ? [[1,-1],[1,1]] : [[-1,-1],[-1,1]]);
+    // Red (1) starts at bottom and moves UP (-1). White (2) starts at top and moves DOWN (+1).
+    var dirs = isKing(p) ? [[-1,-1],[-1,1],[1,-1],[1,1]] : (col === 1 ? [[-1,-1],[-1,1]] : [[1,-1],[1,1]]);
     var moves = [], jumps = [];
     dirs.forEach(function (d) {
       var nr = r + d[0], nc = c + d[1];

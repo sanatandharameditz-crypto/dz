@@ -167,25 +167,27 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['2048']) {
-        instance = window.DZGames['2048']({
-          container: area,
-          sound: sound,
-          onEnd: function(r) {
-            if (typeof dzShowResult === 'function') {
-              dzShowResult({
-                title: r.winner || 'Game Over',
-                subtitle: 'Final Score: ' + r.score,
-                onAgain: function() {
-                  if (typeof dzHideResult === 'function') dzHideResult();
-                  play.classList.add('hidden');
-                  setup.classList.remove('hidden');
-                }
-              });
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['2048']) {
+          instance = window.DZGames['2048']({
+            container: area,
+            sound: sound,
+            onEnd: function(r) {
+              if (typeof dzShowResult === 'function') {
+                dzShowResult({
+                  title: r.winner || 'Game Over',
+                  subtitle: 'Final Score: ' + r.score,
+                  onAgain: function() {
+                    if (typeof dzHideResult === 'function') dzHideResult();
+                    play.classList.add('hidden');
+                    setup.classList.remove('hidden');
+                  }
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

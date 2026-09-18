@@ -178,7 +178,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['starcatcher']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['starcatcher']) {
         instance = window.DZGames['starcatcher']({
           container: area,
           difficulty: diff,
@@ -198,6 +199,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

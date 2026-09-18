@@ -214,7 +214,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['minesweeper']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['minesweeper']) {
         instance = window.DZGames['minesweeper']({
           container: area,
           difficulty: diff,
@@ -234,6 +235,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

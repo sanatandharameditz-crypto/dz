@@ -194,26 +194,29 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['tanks']) {
-        instance = window.DZGames['tanks']({
-          container: area,
-          vsBot: vsBot,
-          sound: sound,
-          onEnd: function(r) {
-            if (typeof dzShowResult === 'function') {
-              dzShowResult({
-                title: r.winner + ' Wins!',
-                subtitle: r.subtitle || 'Tank Destroyed',
-                onAgain: function() {
-                  if (typeof dzHideResult === 'function') dzHideResult();
-                  play.classList.add('hidden');
-                  setup.classList.remove('hidden');
-                }
-              });
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['tanks']) {
+          instance = window.DZGames['tanks']({
+            container: area,
+            vsBot: vsBot,
+            sound: sound,
+            onEnd: function(r) {
+              if (typeof dzShowResult === 'function') {
+                dzShowResult({
+                  title: r.winner + ' Wins!',
+                  subtitle: r.subtitle || 'Tank Destroyed',
+                  onAgain: function() {
+                    if (typeof dzHideResult === 'function') dzHideResult();
+                    play.classList.add('hidden');
+                    setup.classList.remove('hidden');
+                  }
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+        }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

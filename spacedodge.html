@@ -179,7 +179,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['spacedodge']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['spacedodge']) {
         instance = window.DZGames['spacedodge']({
           container: area,
           difficulty: diff,
@@ -199,6 +200,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

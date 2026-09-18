@@ -274,7 +274,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['connect4']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['connect4']) {
         instance = window.DZGames['connect4']({
           container: area,
           vsBot: vsBot,
@@ -295,6 +296,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

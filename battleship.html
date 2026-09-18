@@ -253,27 +253,29 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['battleship']) {
-        instance = window.DZGames['battleship']({
-          container: area,
-          vsBot: vsBot,
-          theme: theme,
-          sound: sound,
-          onEnd: function(r) {
-            if (typeof dzShowResult === 'function') {
-              dzShowResult({
-                title: r.winner + ' Victory!',
-                subtitle: r.subtitle || 'All Enemy Ships Destroyed',
-                onAgain: function() {
-                  if (typeof dzHideResult === 'function') dzHideResult();
-                  play.classList.add('hidden');
-                  setup.classList.remove('hidden');
-                }
-              });
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['battleship']) {
+          instance = window.DZGames['battleship']({
+            container: area,
+            vsBot: vsBot,
+            theme: theme,
+            sound: sound,
+            onEnd: function(r) {
+              if (typeof dzShowResult === 'function') {
+                dzShowResult({
+                  title: r.winner + ' Victory!',
+                  subtitle: r.subtitle || 'All Enemy Ships Destroyed',
+                  onAgain: function() {
+                    if (typeof dzHideResult === 'function') dzHideResult();
+                    play.classList.add('hidden');
+                    setup.classList.remove('hidden');
+                  }
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

@@ -199,7 +199,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['memory']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['memory']) {
         instance = window.DZGames['memory']({
           container: area,
           gridSize: grid,
@@ -219,6 +220,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

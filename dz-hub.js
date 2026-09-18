@@ -254,12 +254,25 @@
     if (typeof dzBindGameLinks === 'function') dzBindGameLinks();
   });
   
-  // Handle Loader removal
+  // Handle Loader removal and First-time Setup
   window.addEventListener('load', function() {
     var loader = document.getElementById('dz-loader');
     if (loader) {
       loader.classList.add('hidden-loader');
       setTimeout(function() { loader.style.display = 'none'; }, 600);
+    }
+
+    // First time user name prompt
+    if (!localStorage.getItem('dz_player_v1')) {
+      setTimeout(function() {
+        var name = prompt("Welcome to DuelZone! What is your player name?");
+        if (name && name.trim().length > 0) {
+          DZPlayer.setName(name);
+          renderProfile();
+        } else {
+          DZPlayer.save(); // save default so they aren't prompted endlessly if they cancel
+        }
+      }, 700); // Wait for loader animation to finish
     }
   });
 })();

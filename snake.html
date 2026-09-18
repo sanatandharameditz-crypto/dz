@@ -191,7 +191,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['snake']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['snake']) {
         instance = window.DZGames['snake']({
           container: area,
           speed: speed,
@@ -211,6 +212,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

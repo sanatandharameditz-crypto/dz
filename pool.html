@@ -178,26 +178,28 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['pool']) {
-        instance = window.DZGames['pool']({
-          container: area,
-          vsBot: vsBot,
-          sound: sound,
-          onEnd: function(r) {
-            if (typeof dzShowResult === 'function') {
-              dzShowResult({
-                title: r.winner + ' Wins!',
-                subtitle: r.subtitle || '8-Ball Pool Match',
-                onAgain: function() {
-                  if (typeof dzHideResult === 'function') dzHideResult();
-                  play.classList.add('hidden');
-                  setup.classList.remove('hidden');
-                }
-              });
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['pool']) {
+          instance = window.DZGames['pool']({
+            container: area,
+            vsBot: vsBot,
+            sound: sound,
+            onEnd: function(r) {
+              if (typeof dzShowResult === 'function') {
+                dzShowResult({
+                  title: r.winner + ' Wins!',
+                  subtitle: r.subtitle || '8-Ball Pool Match',
+                  onAgain: function() {
+                    if (typeof dzHideResult === 'function') dzHideResult();
+                    play.classList.add('hidden');
+                    setup.classList.remove('hidden');
+                  }
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

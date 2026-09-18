@@ -90,22 +90,63 @@
     if (collide(grid, piece, px, py)) endGame();
   }
 
+  function drawBlock(c, r, color) {
+    var x = c * BLOCK;
+    var y = r * BLOCK;
+    var pad = 1;
+    var size = BLOCK - pad * 2;
+    
+    // Base color
+    ctx.fillStyle = color;
+    ctx.fillRect(x + pad, y + pad, size, size);
+    
+    // Top-left highlight bevel
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.beginPath();
+    ctx.moveTo(x + pad, y + pad + size);
+    ctx.lineTo(x + pad, y + pad);
+    ctx.lineTo(x + pad + size, y + pad);
+    ctx.lineTo(x + pad + size - 4, y + pad + 4);
+    ctx.lineTo(x + pad + 4, y + pad + 4);
+    ctx.lineTo(x + pad + 4, y + pad + size - 4);
+    ctx.fill();
+    
+    // Bottom-right shadow bevel
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.beginPath();
+    ctx.moveTo(x + pad + size, y + pad);
+    ctx.lineTo(x + pad + size, y + pad + size);
+    ctx.lineTo(x + pad, y + pad + size);
+    ctx.lineTo(x + pad + 4, y + pad + size - 4);
+    ctx.lineTo(x + pad + size - 4, y + pad + size - 4);
+    ctx.lineTo(x + pad + size - 4, y + pad + 4);
+    ctx.fill();
+
+    // Inner darker core
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    ctx.fillRect(x + pad + 4, y + pad + 4, size - 8, size - 8);
+  }
+
   function draw() {
     ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--dz-bg-card').trim() || '#1a1a1a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw grid background faintly
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+    for(var r=0; r<=ROWS; r++) { ctx.beginPath(); ctx.moveTo(0, r*BLOCK); ctx.lineTo(COLS*BLOCK, r*BLOCK); ctx.stroke(); }
+    for(var c=0; c<=COLS; c++) { ctx.beginPath(); ctx.moveTo(c*BLOCK, 0); ctx.lineTo(c*BLOCK, ROWS*BLOCK); ctx.stroke(); }
+
     for (var r = 0; r < ROWS; r++) {
       for (var c = 0; c < COLS; c++) {
         if (grid[r][c]) {
-          ctx.fillStyle = grid[r][c];
-          ctx.fillRect(c * BLOCK + 1, r * BLOCK + 1, BLOCK - 2, BLOCK - 2);
+          drawBlock(c, r, grid[r][c]);
         }
       }
     }
     for (var r = 0; r < piece.shape.length; r++) {
       for (var c = 0; c < piece.shape[r].length; c++) {
         if (!piece.shape[r][c]) continue;
-        ctx.fillStyle = piece.color;
-        ctx.fillRect((px + c) * BLOCK + 1, (py + r) * BLOCK + 1, BLOCK - 2, BLOCK - 2);
+        drawBlock(px + c, py + r, piece.color);
       }
     }
   }

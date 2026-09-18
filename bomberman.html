@@ -211,7 +211,8 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['bomberman']) {
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['bomberman']) {
         instance = window.DZGames['bomberman']({
           container: area,
           vsBot: vsBot,
@@ -231,6 +232,7 @@
           }
         });
       }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {

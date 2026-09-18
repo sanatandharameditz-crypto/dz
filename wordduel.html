@@ -195,26 +195,28 @@
       play.classList.remove('hidden');
       if (instance && instance.stop) instance.stop();
 
-      if (window.DZGames && window.DZGames['wordduel']) {
-        instance = window.DZGames['wordduel']({
-          container: area,
-          difficulty: diff,
-          sound: sound,
-          onEnd: function(r) {
-            if (typeof dzShowResult === 'function') {
-              dzShowResult({
-                title: 'Time\'s Up!',
-                subtitle: r.subtitle || 'Word Duel Complete',
-                onAgain: function() {
-                  if (typeof dzHideResult === 'function') dzHideResult();
-                  play.classList.add('hidden');
-                  setup.classList.remove('hidden');
-                }
-              });
+      setTimeout(function() {
+        if (window.DZGames && window.DZGames['wordduel']) {
+          instance = window.DZGames['wordduel']({
+            container: area,
+            difficulty: diff,
+            sound: sound,
+            onEnd: function(r) {
+              if (typeof dzShowResult === 'function') {
+                dzShowResult({
+                  title: 'Time\'s Up!',
+                  subtitle: r.subtitle || 'Word Duel Complete',
+                  onAgain: function() {
+                    if (typeof dzHideResult === 'function') dzHideResult();
+                    play.classList.add('hidden');
+                    setup.classList.remove('hidden');
+                  }
+                });
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      }, 60);
     });
 
     document.getElementById('dz-restart').addEventListener('click', function() {
